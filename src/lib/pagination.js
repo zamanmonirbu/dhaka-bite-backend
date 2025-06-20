@@ -1,14 +1,9 @@
-export const createFilter = (search, date) => {
+export const createFilter = (search) => {
     let filter = {};
     if (search) {
       filter.name = { $regex: search, $options: "i" };
     }
-    if (date) {
-      const _date = new Date(date);
-      const startOfDay = new Date(_date.getFullYear(), _date.getMonth(), _date.getDate());
-      const endOfDay = new Date(_date.getFullYear(), _date.getMonth(), _date.getDate() + 1);
-      filter.createdAt = { $gte: startOfDay, $lt: endOfDay };
-    }
+    
     return filter;
   };
   
