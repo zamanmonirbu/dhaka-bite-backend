@@ -9,6 +9,8 @@ import OtherPackageRoutes from '../../entities/other-package/otherPackage.routes
 import reviewRatingRoutes from '../../entities/review-rating/reviewRating.routes.js';
 import locationRoutes from '../../entities/location/location.routes.js';
 import contactRoutes from '../../entities/contact-us/contact.routes.js';
+import blogRoutes from '../../entities/blog/blog.routes.js';
+import offerRoutes from '../../entities/offer/offer.routes.js';
 
 // import otherServiceRoutes from '../../entities/other-service/otherService.routes.js';
 const router = express.Router();
@@ -19,9 +21,12 @@ router.use('/v1/delivery-area', deliveryAreaRoutes);
 router.use('/v1/hero-image',heroImageRoutes);
 router.use('/v1/meal-package',mealPackageRoutes);
 router.use('/v1/meals', mealRoutes);  
+router.use('/v1/offers', offerRoutes); 
 router.use('/v1/review-rating', reviewRatingRoutes);
 router.use('/v1/contact-us', contactRoutes); // Assuming you have a contact route file
 router.use('/v1/location', locationRoutes); // Assuming you have a location route file
+router.use("/v1/blogs", blogRoutes);
+
 
 router.use('/v1/other-package', OtherPackageRoutes); // Assuming you have a route file for other packages
 
