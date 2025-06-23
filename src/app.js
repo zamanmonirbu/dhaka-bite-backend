@@ -17,6 +17,8 @@ import errorHandler from './core/middlewares/errorMiddleware.js';
 import notFound from './core/middlewares/notFound.js';
 import { globalLimiter } from './lib/limit.js';
 import appRouter from './core/app/appRouter.js';
+import "./entities/cron/mealCron.js"
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -50,6 +52,10 @@ app.use(globalLimiter);
 // Set up static files middleware
 const uploadPath = path.resolve(__dirname, "../uploads");
 app.use("/uploads", express.static(uploadPath));
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the API');
+});
 
 // Set up API routes
 app.use('/api', appRouter);

@@ -11,6 +11,7 @@ import locationRoutes from '../../entities/location/location.routes.js';
 import contactRoutes from '../../entities/contact-us/contact.routes.js';
 import blogRoutes from '../../entities/blog/blog.routes.js';
 import offerRoutes from '../../entities/offer/offer.routes.js';
+import mainMealRoutes from '../../entities/main-meal/mainMeal.routes.js';
 
 // import otherServiceRoutes from '../../entities/other-service/otherService.routes.js';
 const router = express.Router();
@@ -21,6 +22,7 @@ router.use('/v1/delivery-area', deliveryAreaRoutes);
 router.use('/v1/hero-image',heroImageRoutes);
 router.use('/v1/meal-package',mealPackageRoutes);
 router.use('/v1/meals', mealRoutes);  
+router.use('/v1/main-meal',mainMealRoutes); 
 router.use('/v1/offers', offerRoutes); 
 router.use('/v1/review-rating', reviewRatingRoutes);
 router.use('/v1/contact-us', contactRoutes); // Assuming you have a contact route file

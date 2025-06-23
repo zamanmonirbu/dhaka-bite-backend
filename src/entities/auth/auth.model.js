@@ -54,6 +54,7 @@ const UserSchema = new mongoose.Schema(
       enum: ['basic', 'standard', 'premium', 'none'],
       default: 'none'
     },
+    isMealActive: { type: Boolean, default: false },
     subscriptionStartDate: { type: Date, default: null },
     subscriptionEndDate: { type: Date, default: null },
     hasActiveSubscription: { type: Boolean, default: false },
