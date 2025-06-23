@@ -1,9 +1,12 @@
 import express from "express"
-import { createMeal, updateMealStatus } from "./mainMeal.controller.js"
+import { createMeal, getMealsByUserIdInThisMonth, getTodayMeals } from "./mainMeal.controller.js"
 
 const router = express.Router()
 
 router.post("/create", createMeal)
-router.patch("/update-status/:id", updateMealStatus)
+router.get("/user/:userId/this-month", getMealsByUserIdInThisMonth)
+router.get("/user/:userId/today", getTodayMeals)
 
 export default router
+
+
