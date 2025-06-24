@@ -12,6 +12,7 @@ export const getDashboardInfoService = async ({ page = 1, limit = 10 }) => {
       }
     }
   ]);
+  ///
 
   const totalOrders = await Mainmeal.countDocuments({ status: 'active' });
   const totalUsers = await User.countDocuments({ role: RoleType.USER });
