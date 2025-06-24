@@ -1,7 +1,7 @@
 import DeliveryArea from "./deliveryArea.model.js";
 
 export const getDeliveryAreasService = async () => {
-  const deliveryAreas = await DeliveryArea.find({}, { areaName: 1, _id: 0 });
+  const deliveryAreas = await DeliveryArea.find({}).sort({ createdAt: -1 });
   return deliveryAreas;
 };
 
@@ -14,6 +14,9 @@ export const getDeliveryAreaByIdService = async (id) => {
 };
 
 export const createDeliveryAreaService = async (data) => {
+
+  console.log("Creating delivery area with data:", data);
+
   const deliveryArea = await DeliveryArea.create(data);
   return deliveryArea;
 };

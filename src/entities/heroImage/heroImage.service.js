@@ -1,5 +1,6 @@
 import HeroImage from './heroImage.model.js';
 import { cloudinaryUpload } from '../../lib/cloudinaryUpload.js';
+import { v2 as cloudinary } from "cloudinary";
 
 // Service to create a new hero image
 export const createHeroImageService = async (title, imageFile) => {
@@ -52,7 +53,7 @@ export const getLastThreeHeroImagesService = async () => {
 
 // Service to delete a hero image
 export const deleteHeroImageService = async (id) => {
-    const heroImage = await HeroImage.findById(id);
+    const heroImage = await HeroImage.findByIdAndRemove(id);
     if (!heroImage) {
         throw new Error('HeroImage not found');
     }
@@ -62,5 +63,6 @@ export const deleteHeroImageService = async (id) => {
         await cloudinary.uploader.destroy(publicId);
     }
 
-    return await heroImage.remove();
+    return heroImage;
 };
+

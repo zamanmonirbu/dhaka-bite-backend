@@ -79,3 +79,18 @@ export const getTodayMealsService = async (userId) => {
   }
 }
 
+
+export const mealDeliveryService = async ({ mealId, riderId }) => {
+  const meal = await Mainmeal.findOneAndUpdate(
+    { mealId },
+    { isDelivered: true, delivermanId: riderId, deliveryTime: new Date().toISOString() },
+    { new: true }
+  );
+
+  if (!meal) {
+    throw new Error('Meal not found or already delivered');
+  }
+
+  return meal;
+};
+

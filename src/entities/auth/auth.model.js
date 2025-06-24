@@ -26,9 +26,14 @@ const UserSchema = new mongoose.Schema(
     referedBy: { type: String, default: null },
     isVerified: { type: Boolean, default: false },
     password: { type: String, required: true },
-    area: {
+    vehicleType:{
       type: String,
-      required: true,
+      enum: ['car','cycle', 'bike', 'truck', 'van', 'other'],
+      default: 'cycle'
+    },
+    area: { 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'DeliveryArea'
     },
     address: {
       type: String,
@@ -41,7 +46,7 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       default: RoleType.USER,
-      enum: [RoleType.USER, RoleType.ADMIN, RoleType.SELLER]
+      enum: [RoleType.USER, RoleType.ADMIN, RoleType.SELLER,RoleType.RIDER]
     },
     otp: { type: String, default: null },
     otpExpires: { type: Date, default: null },

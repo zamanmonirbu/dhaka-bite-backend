@@ -6,6 +6,9 @@ const mealSchema = new mongoose.Schema(
     mealId: { type: mongoose.Schema.Types.ObjectId, ref: "Meal" },
     date: String,
     status: { type: String, enum: ["active", "skipped"], default: "active" },
+    isDelivered: { type: Boolean, default: false },
+    delivermanId: { type: mongoose.Schema.Types.ObjectId, ref: "Rider" },
+    deliveryTime: { type: String, default: null },
   },
   { timestamps: true }
 );

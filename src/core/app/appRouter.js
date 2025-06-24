@@ -13,6 +13,7 @@ import blogRoutes from '../../entities/blog/blog.routes.js';
 import offerRoutes from '../../entities/offer/offer.routes.js';
 import mainMealRoutes from '../../entities/main-meal/mainMeal.routes.js';
 import subcriptionRoutes from '../../entities/subcription/subcription.routes.js';
+import adminRoutes from '../../entities/admin/admin.routes.js';
 
 // import otherServiceRoutes from '../../entities/other-service/otherService.routes.js';
 const router = express.Router();
@@ -30,6 +31,8 @@ router.use('/v1/contact-us', contactRoutes); // Assuming you have a contact rout
 router.use('/v1/location', locationRoutes); // Assuming you have a location route file
 router.use("/v1/blogs", blogRoutes);
 router.use('/v1/subcription', subcriptionRoutes); // Assuming you have a meal route file
+
+router.use('/v1/admin', adminRoutes);
 
 
 router.use('/v1/other-package', OtherPackageRoutes); // Assuming you have a route file for other packages

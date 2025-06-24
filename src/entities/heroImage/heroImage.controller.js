@@ -15,6 +15,9 @@ export const createHeroImageController = async (req, res) => {
 
         generateResponse(res, 201, true, 'Hero image created successfully', heroImage);
     } catch (error) {
+
+        console.error(error);
+
         generateResponse(res, 500, false, 'Failed to create hero image', error.message);
     }
 };
@@ -47,6 +50,7 @@ export const deleteHeroImageController = async (req, res) => {
         await deleteHeroImageService(id);
         generateResponse(res, 200, true, 'Hero image deleted successfully', null);
     } catch (error) {
+        console.log(error)
         generateResponse(res, 500, false, 'Failed to delete hero image', error.message);
     }
 };

@@ -1,4 +1,4 @@
-import { createMealService, getMealsByUserIdInThisMonthService, getTodayMealsService } from "./mainMeal.service.js";
+import { createMealService, getMealsByUserIdInThisMonthService, getTodayMealsService,mealDeliveryService } from "./mainMeal.service.js";
 
 export const createMeal = async (req, res) => {
   const {userId,mealId, date,status}= req.body;
@@ -28,5 +28,15 @@ export const getTodayMeals = async (req, res) => {
     res.status(200).json({ success: true, data: { previousMeals, upcomingMeals } });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to get today meals', error });
+  }
+};
+
+export const mealDelivery = async (req, res) => {
+  const {  mealId,riderId } = req.body;
+  try {
+    const meal = mealDeliveryService({ mealId, riderId });
+    res.status(200).json({ success: true, data: meal });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to deliver meal', error });
   }
 };
