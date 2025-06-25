@@ -30,14 +30,14 @@ export const getDashboardInfoService = async ({ page = 1, limit = 10 }) => {
     .skip((page - 1) * limit)
     .limit(limit);
 
-  return {
-    totalEarn: totalEarn[0].totalEarn,
-    totalOrders,
-    totalUsers,
-    totalRiders,
-    customerList,
-    riderList
-  };
+ return {
+  totalEarn: totalEarn[0]?.totalEarn ?? 0,
+  totalOrders,
+  totalUsers,
+  totalRiders,
+  customerList,
+  riderList
+};
 };
 
 
