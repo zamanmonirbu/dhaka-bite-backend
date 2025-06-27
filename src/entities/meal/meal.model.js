@@ -11,9 +11,9 @@ const mealSchema = new mongoose.Schema({
     required: [true, 'Please specify meal type'],
   },
   foodPackage: {
-    type: String,
-    required: [true, 'Please specify meal category'],
-    
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'MealPackage',
+    required: [true, 'Please select a food package']
   },
   description: {
     type: String,

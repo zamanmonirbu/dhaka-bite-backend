@@ -10,7 +10,7 @@ export const createMealPackageService = async (data, image) => {
     imageUrl = result.secure_url;
   }
 
-  const savings = actualPrice - discountedPrice;
+const savings = actualPrice - discountedPrice;
 
   const mealPackage = new MealPackage({
     packageName,

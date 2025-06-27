@@ -63,44 +63,71 @@ export const getMealByIdService = async (id) => {
   return await Meal.findById(id);
 };
 
-export const getMealsService = async (packages = null, days) => {
+// import Meal from "../models/Meal.js";
+// import mongoose from "mongoose";
+
+export const getMealsService = async (packages = null, days = [
+  "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"
+]) => {
   const filter = {};
 
-  if (packages) {
-    filter.foodPackage = { $in: packages };
+  if (packages && packages.length) {
+    filter.foodPackage = { $in: packages.map((id) => new mongoose.Types.ObjectId(id)) };
   }
 
   if (days?.length) {
     filter.availability = { $in: days };
   }
 
-  const meals = await Meal.find(filter).lean();
+  const meals = await Meal.find(filter)
+    .populate({
+      path: "foodPackage",
+      select: "packageName actualPrice discountedPrice savings image",
+    })
+    .lean();
 
-  const grouped = {};
+  const grouped = new Map();
 
-  meals.forEach((meal) => {
+  for (const meal of meals) {
     const pkg = meal.foodPackage;
     const day = meal.availability;
 
-    if (!grouped[pkg]) grouped[pkg] = {};
-    if (!grouped[pkg][day]) grouped[pkg][day] = [];
+    if (!pkg || typeof pkg !== "object") continue;
 
-    grouped[pkg][day].push(meal);
-  });
+    const pkgId = pkg._id.toString();
 
-  // Order by custom day cycle
-  const orderedResult = {};
-
-  for (const pkg of Object.keys(grouped)) {
-    orderedResult[pkg] = {};
-    for (const day of days) {
-      if (grouped[pkg][day]) {
-        orderedResult[pkg][day] = grouped[pkg][day];
-      }
+    if (!grouped.has(pkgId)) {
+      grouped.set(pkgId, {
+        packageInfo: pkg,
+        days: {},
+      });
     }
+
+    const entry = grouped.get(pkgId);
+
+    if (!entry.days[day]) {
+      entry.days[day] = [];
+    }
+
+    entry.days[day].push(meal);
   }
 
-  return orderedResult;
+  // Convert to array and order days
+  const result = [];
+
+  for (const [, { packageInfo, days: rawDays }] of grouped.entries()) {
+    const orderedDays = {};
+
+    for (const day of days) {
+      if (rawDays[day]) {
+        orderedDays[day] = rawDays[day];
+      }
+    }
+
+    result.push({ packageInfo, days: orderedDays });
+  }
+
+  return result;
 };
 
 
