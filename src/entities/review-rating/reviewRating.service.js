@@ -24,6 +24,15 @@ export const getReviewRatingByIdService = async (id) => {
   return reviewRating;
 };
 
+export const getUnderReviewsService = async () => {
+  console.log("Fetching under reviews");
+  const reviewRatings = await ReviewRating.find({ accepted: false })
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .populate("userId", "name profileImage");
+  return reviewRatings;
+}
+
 export const deleteReviewRatingService = async (id) => {
   const reviewRating = await ReviewRating.findByIdAndDelete(id);
   if (!reviewRating) {

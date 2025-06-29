@@ -24,7 +24,7 @@ const savings = actualPrice - discountedPrice;
 };
 
 export const getMealPackagesService = async () => {
-  return await MealPackage.find().sort({ createdAt: -1 }).limit(3).exec();
+  return await MealPackage.find();
 };
 
 export const getMealPackageByIdService = async (id) => {

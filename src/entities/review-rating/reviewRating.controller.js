@@ -4,7 +4,8 @@ import {
   getReviewRatingByUserIdService,
   deleteReviewRatingService,
   updateReviewRatingService,
-  getLatestAcceptedReviewsService,
+  getUnderReviewsService,
+  getLatestAcceptedReviewsService
 } from './reviewRating.service.js';
 import { generateResponse } from '../../lib/responseFormate.js';
 
@@ -13,7 +14,7 @@ export const createReviewRatingController = async (req, res) => {
     const reviewRating = await createReviewRatingService(req.body);
     generateResponse(res, 201, true, 'Review rating created successfully', reviewRating);
   } catch (error) {
-    // console.log('Error creating review rating:', error);
+    console.log('Error creating review rating:', error);
     generateResponse(res, 500, false, 'Failed to create review rating', null);
   }
 };
@@ -25,6 +26,17 @@ export const getReviewRatingByIdController = async (req, res) => {
   } catch (error) {
     console.log('Error fetching review rating:', error);
     generateResponse(res, 500, false, 'Failed to fetch review rating', null);
+  }
+};
+
+
+export const adminApprovalController = async (req, res) => {
+  try {
+    const reviews = await getUnderReviewsService();
+    generateResponse(res, 200, true, 'Under reviews fetched successfully', reviews);
+  } catch (error) {
+    console.log('Error fetching under reviews:', error);
+    generateResponse(res, 500, false, 'Failed to fetch under reviews', null);
   }
 };
 
@@ -54,6 +66,7 @@ export const updateReviewRatingController = async (req, res) => {
     generateResponse(res, 500, false, 'Failed to update review rating', null);
   }
 };
+
 
 export const getLatestAcceptedReviewsController = async (req, res) => {
   console.log('Fetching latest accepted reviews...');

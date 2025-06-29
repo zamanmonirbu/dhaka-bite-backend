@@ -14,6 +14,7 @@ import offerRoutes from '../../entities/offer/offer.routes.js';
 import mainMealRoutes from '../../entities/main-meal/mainMeal.routes.js';
 import subcriptionRoutes from '../../entities/subcription/subcription.routes.js';
 import adminRoutes from '../../entities/admin/admin.routes.js';
+import paymentRoutes from '../../entities/payment/payment.routes.js';
 
 // import otherServiceRoutes from '../../entities/other-service/otherService.routes.js';
 const router = express.Router();
@@ -27,10 +28,11 @@ router.use('/v1/meals', mealRoutes);
 router.use('/v1/main-meal',mainMealRoutes); 
 router.use('/v1/offers', offerRoutes); 
 router.use('/v1/review-rating', reviewRatingRoutes);
-router.use('/v1/contact-us', contactRoutes); // Assuming you have a contact route file
-router.use('/v1/location', locationRoutes); // Assuming you have a location route file
+router.use('/v1/contact-us', contactRoutes); 
+router.use('/v1/location', locationRoutes); 
 router.use("/v1/blogs", blogRoutes);
-router.use('/v1/subcription', subcriptionRoutes); // Assuming you have a meal route file
+router.use('/v1/subcription', subcriptionRoutes); 
+router.use('/v1/payment', paymentRoutes); 
 
 router.use('/v1/admin', adminRoutes);
 
