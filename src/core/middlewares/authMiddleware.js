@@ -33,6 +33,8 @@ export const adminMiddleware = async (req, res, next) => {
     const decoded = jwt.verify(token, accessTokenSecrete);
     req.user = decoded;
 
+    console.log(req.user.role);
+
     if (req.user.role !== RoleType.ADMIN) {
       return res.status(403).json({ message: 'Admin access only' });
     }

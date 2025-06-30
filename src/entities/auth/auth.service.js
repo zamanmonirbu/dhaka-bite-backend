@@ -99,7 +99,7 @@ export const resendVerifyEmailService = async (email) => {
 export const loginUserService = async ({ email, password }) => {
   if (!email || !password) throw new Error('Email and password are required');
 
-  const user = await User.findOne({ email }).select("-password");
+  const user = await User.findOne({ email }).select("-password").populate("area");
 
   if (!user) throw new Error('User not found');
 

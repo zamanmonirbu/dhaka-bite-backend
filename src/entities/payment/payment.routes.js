@@ -10,10 +10,10 @@ import { adminMiddleware, userMiddleware } from '../../core/middlewares/authMidd
 
 const router = express.Router();
 
-router.post('/',userMiddleware, createPaymentController);
-router.get('/', getAllPaymentsController);
+router.post('/', userMiddleware, createPaymentController);
+router.get('/', adminMiddleware, getAllPaymentsController);
 router.get('/:id', getPaymentByIdController);
-router.put('/:id', updatePaymentController);
+router.put('/:id',adminMiddleware, updatePaymentController);
 router.delete('/:id', deletePaymentController);
 
 export default router;

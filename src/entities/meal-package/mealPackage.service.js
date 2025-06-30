@@ -1,5 +1,6 @@
 import MealPackage from "./mealPackage.model.js";
 import { cloudinaryUpload } from "../../lib/cloudinaryUpload.js";
+import Meal from "../meal/meal.model.js";
 
 export const createMealPackageService = async (data, image) => {
   const { packageName, actualPrice, discountedPrice } = data;
@@ -28,7 +29,12 @@ export const getMealPackagesService = async () => {
 };
 
 export const getMealPackageByIdService = async (id) => {
-  return await MealPackage.findById(id);
+
+  const mealPackage = await Meal.find({ foodPackage: id }).populate('foodPackage', 'packageName actualPrice discountedPrice savings image');
+
+  if (!mealPackage) throw new Error('Meal package not found');
+
+  return mealPackage;
 };
 
 export const updateMealPackageService = async (id, data, image) => {

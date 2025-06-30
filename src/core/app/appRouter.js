@@ -15,6 +15,7 @@ import mainMealRoutes from '../../entities/main-meal/mainMeal.routes.js';
 import subcriptionRoutes from '../../entities/subcription/subcription.routes.js';
 import adminRoutes from '../../entities/admin/admin.routes.js';
 import paymentRoutes from '../../entities/payment/payment.routes.js';
+import orderRoutes from '../../entities/order/order.routes.js';
 
 // import otherServiceRoutes from '../../entities/other-service/otherService.routes.js';
 const router = express.Router();
@@ -33,6 +34,7 @@ router.use('/v1/location', locationRoutes);
 router.use("/v1/blogs", blogRoutes);
 router.use('/v1/subcription', subcriptionRoutes); 
 router.use('/v1/payment', paymentRoutes); 
+router.use('/v1/orders', orderRoutes);
 
 router.use('/v1/admin', adminRoutes);
 
