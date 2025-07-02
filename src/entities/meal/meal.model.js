@@ -15,10 +15,7 @@ const mealSchema = new mongoose.Schema({
     ref: 'MealPackage',
     required: [true, 'Please select a food package']
   },
-  packageName: {
-    type: String,
-    required: [true, 'Please add a package name']
-  },
+
   description: {
     type: String,
     required: [true, 'Please add a description']

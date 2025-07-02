@@ -22,6 +22,9 @@ export const createDeliveryAreaService = async (data) => {
 };
 
 export const updateDeliveryAreaService = async (id, data) => {
+
+  console.log("Updating delivery area with data:", id, data);
+
   const deliveryArea = await DeliveryArea.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,

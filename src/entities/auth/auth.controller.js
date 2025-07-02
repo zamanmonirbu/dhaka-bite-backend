@@ -39,6 +39,8 @@ if (!result.success) {
 
 export const verifyUserEmail = async (req, res, next) => {
   const { email, otp } = req.body;
+
+  console.log('Email:', email, 'OTP:', otp);
   try {
     await verifyUserEmailService({ email, otp });
     generateResponse(res, 200, true, 'Email verification successful', null);
