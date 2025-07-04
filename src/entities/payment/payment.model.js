@@ -7,6 +7,11 @@ const paymentSchema = new mongoose.Schema(
     reference: { type: String, required: true },
     mobileNumber: { type: String, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    payType: {
+      type: String,
+      enum: ['subscription', 'recharge'],
+      required: true,
+    },
     paymentMethod: {
       type: String,
       enum: ['bKash', 'Nagad', 'Rocket', 'Card'],

@@ -6,11 +6,12 @@ import {
   updateSubscriptionController,
   deleteSubscriptionController
 } from './subcription.controller.js';
+import { userMiddleware } from '../../core/middlewares/authMiddleware.js';
 
 const router = express.Router();
 
 router.post('/', createSubscriptionController);
-router.get('/', getAllSubscriptionsController);
+router.get('/',userMiddleware, getAllSubscriptionsController);
 router.get('/:id', getSubscriptionByIdController);
 router.put('/:id', updateSubscriptionController);
 router.delete('/:id', deleteSubscriptionController);

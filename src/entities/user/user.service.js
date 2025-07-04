@@ -50,7 +50,9 @@ export const getUserById = async (userId) => {
 
   
 
-  const user = await User.findById(userId).select("-password -createdAt -updatedAt -__v -verificationCode -verificationCodeExpires");
+  const user = await User.findById(userId).select("-password -createdAt -updatedAt -__v -verificationCode -verificationCodeExpires").populate(
+    "area"
+  );
   if (!user) {
     throw new Error('User not found');
   }

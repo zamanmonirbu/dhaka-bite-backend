@@ -9,9 +9,10 @@ import {
   logoutUser,
   verifyUserEmail,
   resendVerifyEmail,
+  getReferencesUsers,
 } from './auth.controller.js';
 
-import { userAdminSellerMiddleware } from '../../core/middlewares/authMiddleware.js';
+import { userAdminSellerMiddleware, userMiddleware } from '../../core/middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -24,5 +25,6 @@ router.post('/forget-password', forgetPassword);
 router.post('/verify-code', verifyCode);
 router.post('/reset-password', resetPassword);
 router.post('/logout',userAdminSellerMiddleware , logoutUser);
+router.get('/get-referred-users', userMiddleware, getReferencesUsers);
 
 export default router;

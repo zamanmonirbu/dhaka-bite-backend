@@ -18,8 +18,9 @@ export const createSubscriptionController = async (req, res) => {
 };
 
 export const getAllSubscriptionsController = async (req, res) => {
+  const userId = req.user._id;
   try {
-    const subscriptions = await getAllSubscriptionsService();
+    const subscriptions = await getAllSubscriptionsService(userId);
     generateResponse(res, 200, true, 'Subscriptions fetched successfully', subscriptions);
   } catch (error) {
     generateResponse(res, 500, false, 'Failed to fetch subscriptions', error.message);

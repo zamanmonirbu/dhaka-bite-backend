@@ -4,8 +4,10 @@ import {
   getAllPaymentsByStatusService, 
   getPaymentByIdService, 
   updatePaymentService, 
-  deletePaymentService 
+  deletePaymentService, 
+  getUserBalanceService
 } from './payment.service.js';
+
 
 export const createPaymentController = async (req, res) => {
   try {
@@ -60,3 +62,19 @@ export const deletePaymentController = async (req, res) => {
   }
 };
 
+
+
+export const getUserBalanceController = async (req, res) => {
+  try {
+    const userId = req.user?._id; // Assuming user ID is stored in req.user
+
+    if (!userId) {
+      return generateResponse(res, 400, false, 'User ID is required', null);
+    }
+    
+    const balance = await getUserBalanceService(userId);
+    return generateResponse(res, 200, true, 'User balance fetched successfully', { balance });
+  } catch (error) {
+    return generateResponse(res, 500, false, 'Failed to fetch user balance', error.message);
+  }
+};

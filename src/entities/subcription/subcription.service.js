@@ -1,3 +1,4 @@
+import Payment from '../payment/payment.model.js';
 import Subscription from './subcription.model.js';
 
 export const createSubscriptionService = async (subcriptionName, subcriptionPrice, method,subciptionType,userId) => {
@@ -9,10 +10,12 @@ export const createSubscriptionService = async (subcriptionName, subcriptionPric
   return await newSubscription.save();
 };
 
-export const getAllSubscriptionsService = async () => {
-  const subscriptions = await Subscription.find({});
-  const subcriptions = subscriptions.filter(sub => sub.subciptionType === 'subcription');
-  const recharges = subscriptions.filter(sub => sub.subciptionType === 'recharge');
+export const getAllSubscriptionsService = async (userId) => {
+
+  const subscriptions = await Payment.find({ userId }).sort({ createdAt: -1 }).populate('userId');
+
+  const subcriptions = subscriptions.filter(sub => sub.payType === 'subscription');
+  const recharges = subscriptions.filter(sub => sub.payType === 'recharge');
   
   return { subcriptions, recharges };
 };

@@ -2,7 +2,14 @@ import User from "../auth/auth.model.js";
 import Order from "./order.model.js";
 
 export const createOrderService = async ({userId, ...data }) => {
-  console.log("Creating order with data:", userId,data);
+
+  if (typeof data.deliveryAddress?.location === 'string') {
+    const [latStr, lngStr] = data.deliveryAddress.location.split(",");
+    data.deliveryAddress.location = {
+      lat: parseFloat(latStr),
+      lng: parseFloat(lngStr),
+    };
+  }
   const order = await Order.create({userId, ...data });
 
   if (!order) {

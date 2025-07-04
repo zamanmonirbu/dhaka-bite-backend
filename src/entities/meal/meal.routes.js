@@ -6,7 +6,7 @@ const router = Router();
 
 router.post('/', multerUpload([{ name: 'image', maxCount: 1 }]), createMealController);
 router.get('/', getMealsController);
-router.get('/:id', getMealByIdController);
+router.get('/:foodPackage', getMealByIdController);
 router.put('/:id', multerUpload([{ name: 'image', maxCount: 1 }]), updateMealController);
 router.delete('/:id', deleteMealController);
 

@@ -1,7 +1,8 @@
 // import { getMealPackageByIdService } from "../meal-package/mealPackage.service";
 
 import { generateResponse } from "../../lib/responseFormate.js";
-import { createMealService, deleteMealService, getMealsService, updateMealService } from "./meal.service.js";
+import { getMealPackageByIdService } from "../meal-package/mealPackage.service.js";
+import { createMealService, deleteMealService, getMealByIdService, getMealsService, updateMealService } from "./meal.service.js";
 
 
 export const getMealsController = async (req, res) => {
@@ -50,8 +51,11 @@ function getDayCycle(startDay) {
 
 export const getMealByIdController = async (req, res) => {
   try {
-    const { id } = req.params;
-    const meal = await getMealPackageByIdService(id);
+    const { foodPackage } = req.params;
+
+    // console.log('Fetching meal for food package:', foodPackage);
+
+    const meal = await getMealByIdService(foodPackage);
     generateResponse(res, 200, true, 'Meal fetched successfully', meal);
   } catch (error) {
     generateResponse(res, 500, false, 'Failed to fetch meal', null);

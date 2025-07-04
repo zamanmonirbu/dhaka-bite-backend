@@ -5,7 +5,11 @@ const deliveryAddressSchema = new mongoose.Schema({
   area: String,
   city: String,
   zipCode: String,
-  phone: String
+  phone: String,
+  location: {
+    lat: Number,
+    lng: Number
+  }
 })
 
 const orderSchema = new mongoose.Schema(
@@ -41,7 +45,7 @@ const orderSchema = new mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      enum: ["pending", "confirmed", "preparing", "delivered", "cancelled"],
+      enum: ["pending", "delivered", "cancelled"],
       default: "pending"
     },
     deliveryDate: String,

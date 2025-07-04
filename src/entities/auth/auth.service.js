@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import { refreshTokenSecrete, emailExpires, verificationEmailExpires } from '../../core/config/config.js';
 import sendEmail from '../../lib/sendEmail.js';
 import { generateResetPasswordEmail, generateVerificationEmail } from '../../lib/emailTemplates.js';
+import Order from '../order/order.model.js';
+import Mainmeal from '../main-meal/mainMeal.model.js';
 
 
 
@@ -103,7 +105,6 @@ export const loginUserService = async ({ email, password }) => {
 
   if (!user) throw new Error('User not found');
 
-  console.log('user', user);
 
   if (!user.isVerified) throw new Error('User is not verified yet. Please verify your email address.');
 
@@ -204,3 +205,32 @@ export const resetPasswordService = async ({ email, newPassword }) => {
 
   return;
 };
+
+
+
+export const getReferencesUserService = async (userId) => {
+  const user = await User.findOne({ _id: userId }).select('referenceCode');
+
+  const referedUsers = await User.find({ referedBy: user.referenceCode }).select('name email phone ');
+  
+  const referedUsersWithStats = await Promise.all(referedUsers.map(async (rUser) => {
+    const ordersCount = await Order.countDocuments({ userId: rUser._id });
+
+
+    return {
+      ...rUser.toObject(),
+      ordersCount,
+      
+    };
+  }));
+
+      const totalReference = referedUsers.length;
+
+
+  return {
+    referedUsersWithStats,
+    totalReference,
+    referenceCode: user.referenceCode
+  };
+
+}

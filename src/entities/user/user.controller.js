@@ -61,6 +61,7 @@ export const getUserByIdController = async (req, res) => {
   }
 };
 
+
 export const updateUserController = async (req, res) => {
   try {
     const { id } = req.params;

@@ -1,5 +1,6 @@
 import Meal from './meal.model.js';
 import { cloudinaryUpload } from '../../lib/cloudinaryUpload.js';
+import MealPackage from '../meal-package/mealPackage.model.js';
 
 export const createMealService = async (data, image) => {
   const { name, time,foodPackage, description, ingredients, price, availability, deliveryCharges } = data;
@@ -59,12 +60,14 @@ export const updateMealService = async (id, data, image) => {
   return await Meal.findByIdAndUpdate(id, updateData, { new: true });
 };
 
-export const getMealByIdService = async (id) => {
-  return await Meal.findById(id);
+export const getMealByIdService = async (foodPackage) => {
+
+  const foodPackageFound = await MealPackage.findOne({ packageName: foodPackage });
+
+
+  return await Meal.find({ foodPackage: foodPackageFound._id });
 };
 
-// import Meal from "../models/Meal.js";
-// import mongoose from "mongoose";
 
 export const getMealsService = async (packages = null, days = [
   "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"
@@ -137,3 +140,13 @@ export const deleteMealService = async (id) => {
   return await Meal.findByIdAndDelete(id);
 };
 
+
+
+export const getMealByUserIdService = async (userId) => {
+  return await Meal.find({ userId })
+    .populate({
+      path: 'foodPackage',
+      select: 'name price image time',
+    })
+    .sort({ date: -1 });
+};

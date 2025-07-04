@@ -5,7 +5,9 @@ import RoleType from '../../lib/types.js';
 
 export const userMiddleware = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
+
   if (!token) return res.status(401).json({ message: 'No token, auth denied' });
+
 
   try {
     const decoded = jwt.verify(token, accessTokenSecrete);
@@ -24,16 +26,12 @@ export const userMiddleware = (req, res, next) => {
 
 export const adminMiddleware = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
-  console.log(token );
   
   if (!token) return res.status(401).json({ message: 'No token, auth denied' });
 
   try {
-    console.log(accessTokenSecrete)
     const decoded = jwt.verify(token, accessTokenSecrete);
     req.user = decoded;
-
-    console.log(req.user.role);
 
     if (req.user.role !== RoleType.ADMIN) {
       return res.status(403).json({ message: 'Admin access only' });
@@ -41,11 +39,53 @@ export const adminMiddleware = async (req, res, next) => {
 
     next();
   } catch (err) {
-    console.log(err);
     
     res.status(401).json({ message: 'Token is not valid' });
   }
 };
+
+
+export const riderMiddleware = async (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) return res.status(401).json({ message: 'No token, auth denied' });
+
+  try {
+    const decoded = jwt.verify(token, accessTokenSecrete);
+    req.user = decoded;
+
+    if (req.user.role !== RoleType.RIDER) {
+      return res.status(403).json({ message: 'Rider access only' });
+    }
+
+    next();
+  } catch (err) {
+    
+    res.status(401).json({ message: 'Token is not valid' });
+  }
+};
+
+
+export const riderAdminMiddleware = async (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  
+  if (!token) return res.status(401).json({ message: 'No token, auth denied' });
+
+  try {
+    const decoded = jwt.verify(token, accessTokenSecrete);
+    req.user = decoded;
+
+    if (req.user.role !== RoleType.RIDER && req.user.role !== RoleType.ADMIN) {
+      return res.status(403).json({ message: 'Rider or Admin access only' });
+    }
+
+    next();
+  } catch (err) {
+    
+    res.status(401).json({ message: 'Token is not valid' });
+  }
+};
+
 
 
 export const sellerMiddleware = (req, res, next) => {

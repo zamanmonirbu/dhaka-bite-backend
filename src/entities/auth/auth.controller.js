@@ -8,7 +8,8 @@ import {
   verifyCodeService,
   resetPasswordService,
   verifyUserEmailService,
-  resendVerifyEmailService
+  resendVerifyEmailService,
+  getReferencesUserService
 } from './auth.service.js';
 
 import { registerUserSchema } from '../validations/userValidation.js';
@@ -223,3 +224,21 @@ export const resetPassword = async (req, res, next) => {
   }
 };
 
+
+export const getReferencesUsers = async (req, res, next) => {
+  const userId  = req.user._id;
+  try {
+    const data = await getReferencesUserService(userId);
+    generateResponse(res, 200, true, 'Refered users fetched successfully', data);
+  }
+
+  catch (error) {
+    if (error.message === 'User not found') {
+      generateResponse(res, 404, false, 'User not found', null);
+    }
+
+    else {
+      next(error)
+    }
+  }
+};
